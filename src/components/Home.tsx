@@ -11,10 +11,14 @@ const Home: FC = () => {
   const [editedValues, setEditedValues] = useState<Partial<Todo>>({})
   const [searchTerm, setSearchTerm] = useState<string>("")
 
+  // const url = "http://localhost:3001"
+  const url = "https://todo-server-rfyk.onrender.com"
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/todos")
+        // const res = await axios.get("http://localhost:3001/todos")
+        const res = await axios.get(`${url}/todos`)
         setTodos(res.data)
       } catch (err) {
         console.log("Error fetching todos:", err)
@@ -36,7 +40,7 @@ const Home: FC = () => {
           todo.id === id ? { ...todo, completed: !todo.completed } : todo
         )
         setTodos(updatedTodos)
-        await axios.put(`http://localhost:3001/todos/${id}`, {
+        await axios.put(`${url}/todos/${id}`, {
           ...todoToComplete,
           completed: !todoToComplete.completed, // Toggle the completion status
         })
@@ -51,7 +55,7 @@ const Home: FC = () => {
       const updatedTodos = todos.filter((todo) => todo.id !== id)
       setTodos(updatedTodos)
 
-      await axios.delete(`http://localhost:3001/todos/${id}`)
+      await axios.delete(`${url}/todos/${id}`)
     } catch (err) {
       console.log("Error deleting todo:", err)
     }
@@ -72,7 +76,7 @@ const Home: FC = () => {
         todo.id === id ? { ...todo, ...editedValues } : todo
       )
       setTodos(updatedTodos)
-      await axios.put(`http://localhost:3001/todos/${id}`, editedValues)
+      await axios.put(`${url}/todos/${id}`, editedValues)
       setEditMode(null)
       setEditedValues({})
     } catch (err) {

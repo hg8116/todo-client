@@ -11,10 +11,13 @@ const Create: FC<{ onTodoAdded: (newTodo: Todo) => void }> = ({
     completed: false,
   })
 
+  // const url = "http://localhost:3001"
+  const url = "https://todo-server-rfyk.onrender.com"
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     try {
-      const res = await axios.post("http://localhost:3001/todos", todo)
+      const res = await axios.post(`${url}/todos`, todo)
       console.log("Todo added:", res.data)
 
       // Call the onTodoAdded prop to update the state in the Home component
